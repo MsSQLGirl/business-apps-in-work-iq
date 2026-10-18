@@ -2,11 +2,15 @@
 
 **In short:** Zava Capital is a fictional bank. A credit-card dispute analyst looks into disputes using Copilot Chat, Cowork, GitHub Copilot CLI and a custom agent called Dispute Analyzer. Copilot answers from the bank's business data in Dataverse, follows the business skills (the bank's written dispute rules), uses Fabric analytics to look across a merchant, and drafts emails from Microsoft 365.
 
-## What's in this kit
+**Conference:** This demo was used at the [European Microsoft Fabric + SQL Community Conference (FabCon + SQLCon Europe 2026) in Barcelona](https://espc.tech/conference/fabcon-europe-2026/programme/), in the session [Fabric IQ, Dataverse, and Work IQ: Three Intelligence Layers for Agentic Business](https://espc.tech/conference/fabcon-europe-2026/programme/fabric-iq-dataverse-and-work-iq-three-intelligence-layers-for-agentic-business/).
+
+## What's in the downloadable kit ZIP
+
+This repository folder contains this external README and `Zava-Dispute-Demo-Kit-External.zip`. The ZIP contains:
 
 | File | What it is |
 |---|---|
-| Zava-Dispute-Demo-README.md | This note: the scenario, demo prompts, and setup steps. |
+| Zava-Dispute-Demo-README.md | The guide: scenario, demo prompts, and setup steps. |
 | ZavaDispute_1_0_0_11.zip | The Power Platform solution, with the app, tables, agent and business skills. Import it as is; do not unzip it. |
 | shareable-dispute-seed.zip | The package that loads the demo data. Unzip it before use. |
 
