@@ -6,7 +6,7 @@
 
 | File | What it is |
 |---|---|
-| Zava-Dispute-Demo-README.md | This note: the scenario, demo prompts, and setup steps. |
+| README.md | This note: the scenario, demo prompts, and setup steps. |
 | ZavaDispute_1_0_0_11.zip | The Power Platform solution, with the app, tables, agent and business skills. Import it as is; do not unzip it. |
 | shareable-dispute-seed.zip | The package that loads the demo data. Unzip it before use. |
 
