@@ -2,15 +2,11 @@
 
 **In short:** Zava Capital is a fictional bank. A credit-card dispute analyst looks into disputes using Copilot Chat, Cowork, GitHub Copilot CLI and a custom agent called Dispute Analyzer. Copilot answers from the bank's business data in Dataverse, follows the business skills (the bank's written dispute rules), uses Fabric analytics to look across a merchant, and drafts emails from Microsoft 365.
 
-**Conference:** This demo was used at the [European Microsoft Fabric + SQL Community Conference (FabCon + SQLCon Europe 2026) in Barcelona](https://espc.tech/conference/fabcon-europe-2026/programme/), in the session [Fabric IQ, Dataverse, and Work IQ: Three Intelligence Layers for Agentic Business](https://espc.tech/conference/fabcon-europe-2026/programme/fabric-iq-dataverse-and-work-iq-three-intelligence-layers-for-agentic-business/).
-
-## What's in the downloadable kit ZIP
-
-This repository folder contains this external README and `Zava-Dispute-Demo-Kit-External.zip`. The ZIP contains:
+## What's in this kit
 
 | File | What it is |
 |---|---|
-| Zava-Dispute-Demo-README.md | The guide: scenario, demo prompts, and setup steps. |
+| Zava-Dispute-Demo-README.md | This note: the scenario, demo prompts, and setup steps. |
 | ZavaDispute_1_0_0_11.zip | The Power Platform solution, with the app, tables, agent and business skills. Import it as is; do not unzip it. |
 | shareable-dispute-seed.zip | The package that loads the demo data. Unzip it before use. |
 
@@ -38,18 +34,23 @@ A cardholder disputes a charge. The dispute team checks the transaction, the cus
 | Dispute Analyzer agent | Copilot Studio, **Agents**, then **Dispute Analyzer**. You can also open it from the ZavaDispute solution. |
 | Auto Dispute Triage workflow | Copilot Studio, **Flows**, then **Auto Dispute Triage**. You can also open it from the ZavaDispute solution. |
 
-**Business skills analysts use:**
+**Business skills stored in Dataverse:**
 - answer-dispute-questions (activate this if you want to use or test Agentic Search specifically)
 - evaluate-dispute
 - handle-repeat-disputer
 - record-dispute-decision
 - draft-customer-notice
 
-**Business skills for the automated dispute process (triage and auto-resolution):**
-- Triage Dispute
-- Evaluate Dispute
-- Apply Dispute Resolution
-- Escalate to Exception Queue
+**Names business users and agent instructions can use:** Business users and agent instructions can simply refer to the four names below. Each one maps to the business skill in Dataverse that does the work.
+
+| Name to use | Business skill in Dataverse | What it does |
+|---|---|---|
+| Triage Dispute | evaluate-dispute | Checks whether a filed dispute can be resolved without an analyst. It isn't eligible if the customer is Platinum, the amount is over $5,000, the fraud risk band is High, the customer has 3 or more disputes in 90 days, the evidence conflicts, or confidence is below 0.90. |
+| Evaluate Dispute | evaluate-dispute | Recommends Approve, Deny or Escalate, with a confidence score, reasoning and policy citation. It doesn't change any records. |
+| Apply Dispute Resolution | record-dispute-decision | Records an Approve or Deny outcome: sets the decision and status, writes a decision log entry, and creates the follow-up tasks. |
+| Escalate to Exception Queue | record-dispute-decision | Records an Escalate outcome: sets the status to Escalated and creates a "Review and Decide" task for the assigned analyst. For a repeat disputer, handle-repeat-disputer builds the 90-day pattern context first and then uses record-dispute-decision. |
+
+**The four names are also skill records in the solution, inactive by design.** Decision log entries point to them, and the data setup checks that they exist. Keep them inactive. The work itself runs through the active business skills listed above.
 
 **Repeat-disputer rule:** A repeat disputer has 3 or more disputes in 90 days. These cases always go to an analyst, whatever the amount, customer tier or confidence score. Every skill that checks for repeat disputers uses the same 90-day window.
 
@@ -135,8 +136,11 @@ This prompt combines business data with Fabric analytics.
 5. If you plan to test Auto Dispute Triage, open it in Copilot Studio and check two settings:
    - **Who gets information requests.** The export sends requests to a specific person in the tenant the solution came from. Change it to someone in your tenant.
    - **The Work IQ MCP tool.** Check that it uses your connection. It points to a specific connection rather than one of the solution's connection references, so it may not update on import.
-6. Check the **Dispute Operations MCP Server** in the solution. Its server address carries the ID of the environment the solution was exported from. If it doesn't update to your environment on import, change it to your environment ID.
-7. Publish the Dispute Analyzer agent, share the Dispute Operations app, and give the analyst users their roles.
+6. Check which business skills are active. The solution file doesn't record whether a skill is active, so confirm this after import:
+   - Triage Dispute, Evaluate Dispute, Apply Dispute Resolution and Escalate to Exception Queue are inactive.
+   - answer-dispute-questions is active only if you want to use or test Agentic Search.
+7. Check the **Dispute Operations MCP Server** in the solution. Its server address carries the ID of the environment the solution was exported from. If it doesn't update to your environment on import, change it to your environment ID.
+8. Publish the Dispute Analyzer agent, share the Dispute Operations app, and give the analyst users their roles.
 
 ### Step B: Load the data
 
@@ -144,7 +148,7 @@ This prompt combines business data with Fabric analytics.
 2. To do it by hand instead:
    - Create a virtual environment: `python -m venv .venv`, then `.\.venv\Scripts\python.exe -m pip install -r requirements.txt`. Python 3.10 or later is required.
    - Create `setup.local.json` with your Dataverse URL, tenant ID, sign-in account, and the users who stand in for Adele, Nestor and Megan. You can map all three to yourself.
-   - Run `seed_demo.py configure --confirm-url "<your URL>"` and complete the device-code sign-in. Setup checks the environment, the solution tables and the four automated-process business skills.
+   - Run `seed_demo.py configure --confirm-url "<your URL>"` and complete the device-code sign-in. Setup checks the environment, the solution tables and the four inactive skill records (Triage Dispute, Evaluate Dispute, Apply Dispute Resolution and Escalate to Exception Queue).
    - Run `seed_demo.py prepare seed` to preview, then `apply --plan "<plan_id>" --confirmation "<your acknowledgment>"`. A preview expires after 15 minutes.
    - Run `seed_demo.py validate` to check the result.
 3. **Expected baseline:** 45 disputes, 144 transactions, 48 fraud signals, 101 tasks, 60 decision logs, 10 accounts and 12 contacts.
@@ -161,7 +165,6 @@ None of these block the import or data load.
 - **Auto Dispute Triage: unfilled amount limit.** The rule for "High-value case" still says "Dispute amount > [threshold]". Replace [threshold] with a number, such as 5000 to match Evaluate Dispute.
 - **Auto Dispute Triage: runs on edits too.** The workflow starts when a dispute is added or changed, but the agent is told to act only on newly filed disputes. Editing a dispute that is still Filed could be escalated as "Invalid trigger." Consider triggering on add only.
 
-- **Two evaluation skills.** Evaluate Dispute (automated process) and evaluate-dispute (analyst) can both answer prompt 4. Check during rehearsal which one the answer cites.
 - **Personal skill.** handle-repeat-disputer is marked as a personal skill. Prompts 5 and 6 use handle-repeat-disputer. If someone other than the person who imports the solution runs the demo, check that they can see that skill.
 - **Missing skill for prompt 7.** The Dispute Analyzer calls an "Analyze Repeat Dispute Patterns" skill, which isn't in the solution. This only matters if prompt 7 is run in Dispute Analyzer instead of Cowork or GitHub Copilot CLI.
 - **Possible extra dependency.** The solution file also lists Omnichannel Telephony as a dependency for Contact and User, but the dependency screen doesn't show it. Test the import in a new environment to confirm.
