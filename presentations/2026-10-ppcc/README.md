@@ -2,13 +2,15 @@
 
 ## Event details
 
-- **Date:** October 2026 (exact date to be added)
+- **Session date:** October 28, 2026
 - **Location:** To be added
 - **Event website:** To be added
 
 ## Sessions
 
 ### Why Enterprise Agents Fail and the Microsoft IQ answer
+
+[Session details](https://powerplatformconf.com/sessions/Why-Enterprise-Agents-Fail%3B-and-the-Microsoft-IQ-Answer)
 
 Abstract to be added.
 
