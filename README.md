@@ -12,3 +12,7 @@ A fictional-bank scenario for investigating credit-card disputes with Copilot Ch
 - [Download the demo kit](demo-kits/zava-dispute/Zava-Dispute-Demo-Kit-External.zip)
 
 The kit includes a Power Platform solution and a package for loading demo data. Review the setup instructions before importing the solution or loading data into a dedicated non-production environment.
+
+## Presentations
+
+- [PPCC - October 2026](presentations/2026-10-ppcc/README.md)
