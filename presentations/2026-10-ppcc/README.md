@@ -18,8 +18,6 @@ Enterprise agents fail at alarming rates in production, despite rapid advances i
 
 - [Why Enterprise Agents Fail and the Microsoft IQ answer (PDF)](decks/PPCC_2026_-_Why_Enterprise_Agents_Fail_and_the_Microsoft_IQ_answer.pdf)
 
-Upload additional presentation PDFs and source decks to [decks/](decks/). For multiple talks, use a subfolder per talk.
-
 ## Related resources
 
 - [Business Applications in Work IQ deep dive (YouTube)](https://aka.ms/BizAppsInWorkIQ/DeepDive) - Related deep dive video; this is not the demo used during the session.
