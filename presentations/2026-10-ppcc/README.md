@@ -20,6 +20,6 @@ Abstract to be added.
 
 Upload additional presentation PDFs and source decks to [decks/](decks/). For multiple talks, use a subfolder per talk.
 
-## Recordings and resources
+## Related resources
 
-Links to be added when available.
+- [Business Applications in Work IQ deep dive (YouTube)](https://aka.ms/BizAppsInWorkIQ/DeepDive) - Related deep dive video; this is not the demo used during the session.
