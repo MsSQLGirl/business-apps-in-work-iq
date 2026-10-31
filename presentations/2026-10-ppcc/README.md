@@ -12,7 +12,7 @@
 
 [Session details](https://powerplatformconf.com/sessions/Why-Enterprise-Agents-Fail%3B-and-the-Microsoft-IQ-Answer)
 
-Abstract to be added.
+Enterprise agents fail at alarming rates in production, despite rapid advances in foundation models; not because the models are weak, but because they lack business context, organizational awareness, and governance guardrails. This flagship session unpacks why, then delivers the Microsoft IQ answer, grounded in Dataverse. See how Business Applications in Work IQ grounds Copilot and agents in your business data, processes, and meaning; how Microsoft IQ shows them how work gets done across people, systems, and data; and how role-based access, tested deployments, human approval, and Agent 365 let you scale safely. Through live demos of Work IQ and Fabric IQ, plus a real customer story, leave with practical ideas to move your own AI transformation from pilot to production.
 
 ## Decks
 
