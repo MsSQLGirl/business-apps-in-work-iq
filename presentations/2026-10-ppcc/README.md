@@ -3,8 +3,8 @@
 ## Event details
 
 - **Session date:** October 28, 2026
-- **Location:** To be added
-- **Event website:** To be added
+- **Location:** Las Vegas
+- **Event website:** https://powerplatformconf.com/
 
 ## Sessions
 
